@@ -1,0 +1,39 @@
+Package: rswallpaper
+Title: Wallpapers and Accent Colours for the 'RStudio' IDE
+Version: 0.1.0
+Authors@R:
+    person("Ann", "Zhong", , "annzhong71@gmail.com", role = c("aut", "cre"))
+Description: Build custom 'RStudio' editor themes ('.rstheme' files) that
+    place a semi-transparent image, such as a character illustration, in
+    the source editor; re-tint the IDE chrome (tabs, toolbars, menus,
+    selection, cursor) with an accent colour; or generate complete colour
+    schemes from preset palettes or from the dominant colours of an image.
+    Works on top of any installed theme and ships a 'shiny' gadget with a
+    live preview plus 'RStudio' addins.
+License: MIT + file LICENSE
+Copyright: The demo image inst/extdata/hanakuma_chifuyu.png is
+    (c) TOKYO6 ENTERTAINMENT and not covered by the MIT licence; see
+    inst/extdata/CREDITS.
+URL: https://github.com/Acidic3131/rswallpaper
+BugReports: https://github.com/Acidic3131/rswallpaper/issues
+Depends:
+    R (>= 4.0.0)
+Imports:
+    base64enc,
+    graphics,
+    grDevices,
+    rstudioapi (>= 0.11),
+    stats,
+    tools,
+    utils
+Suggests:
+    jpeg,
+    magick,
+    miniUI,
+    png,
+    shiny,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.1.1

@@ -1,0 +1,14 @@
+Name: Wallpaper Studio
+Description: Choose an image, base theme and accent colour with a live preview, then apply it.
+Binding: wallpaper_studio
+Interactive: true
+
+Name: Shuffle wallpaper
+Description: Show another random image from your wallpaper folder.
+Binding: shuffle_wallpaper
+Interactive: false
+
+Name: Restore previous theme
+Description: Switch back to the theme you used before rswallpaper.
+Binding: restore_theme
+Interactive: false

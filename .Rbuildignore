@@ -1,0 +1,9 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README_en\.md$
+^data-raw$
+^\.github$
+^\.claude$
+^\.gitignore$
+^man/figures/.*\.png$
