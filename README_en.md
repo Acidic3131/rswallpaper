@@ -23,6 +23,7 @@
 
 ```r
 remotes::install_github("Acidic3131/rswallpaper")
+library(rswallpaper)   # again after every R restart, or use rswallpaper::wallpaper_studio() / the Addins menu
 install.packages(c("magick", "shiny", "miniUI"))  # recommended extras
 ```
 

@@ -301,16 +301,23 @@ wallpaper_css <- function(src, opacity, position, size, mode, fade, filter, targ
     )
   }
 
-  if (target == "any") {
-    # Keep the console input and visual-editor chunks clean.
-    pseudo <- if (mode == "overlay") "::after" else " .ace_scroller::before"
-    hidden <- c(
-      paste0('[id*="console"] .ace_editor', pseudo),
-      paste0('.ace_editor[id*="console"]', pseudo),
-      paste0(".ProseMirror .ace_editor", pseudo),
-      paste0('[class*="pm-ace"] .ace_editor', pseudo)
-    )
-    out <- c(out, rule(hidden, display = "none !important"))
-  }
+  # Keep every pane except the source editors clean. Ace editors inside the
+  # Console/Terminal/Jobs/... tabs can carry source-editor ids too, so exclude
+  # them by their workbench tab panel (#rstudio_workbench_panel_<tab>) and by the
+  # terminal's own classes; also the console input and visual-mode chunks.
+  pseudo <- if (mode == "overlay") "::after" else " .ace_scroller::before"
+  hidden <- c(
+    paste0('[id^="rstudio_workbench_panel_"] ', editor, pseudo),
+    paste0(".terminal ", editor, pseudo),
+    paste0(".xterm ", editor, pseudo),
+    paste0('[id*="console"] ', editor, pseudo),
+    paste0(editor, '[id*="console"]', pseudo),
+    paste0(".ProseMirror ", editor, pseudo),
+    paste0('[class*="pm-ace"] ', editor, pseudo)
+  )
+  # :has() in its own rule: a browser without it drops only this rule.
+  has_terminal <- paste0(editor, c(":has(.terminal)", ":has(.xterm)"), pseudo)
+  out <- c(out, rule(hidden, display = "none !important"),
+           rule(has_terminal, display = "none !important"))
   c(sprintf("/* wallpaper (%s) */", mode), out)
 }

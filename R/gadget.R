@@ -117,7 +117,9 @@ STUDIO_CSS <- "
 studio_ui <- function(img) {
   last <- read_state("last")$args %||% list()
   s <- function(x, default) if (is.null(x)) default else x
-  img0 <- img %||% read_state("last")$img %||% ""
+  # The last image may have been moved or deleted since; don't prefill a dead path.
+  last_img <- read_state("last")$img
+  img0 <- img %||% (if (!is.null(last_img) && file.exists(last_img)) last_img) %||% ""
 
   miniUI::miniPage(
     shiny::tags$head(shiny::tags$style(shiny::HTML(STUDIO_CSS))),

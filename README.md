@@ -33,12 +33,16 @@
 ```r
 # install.packages("remotes")
 remotes::install_github("Acidic3131/rswallpaper")
+library(rswallpaper)
 
 # 推荐一起装：自动压缩大图 / 从图片取色 / 可视化面板
 install.packages(c("magick", "shiny", "miniUI"))
 ```
 
 需要 RStudio ≥ 1.2（建议用较新版本）和 R ≥ 4.0。
+
+> 安装或重装后 RStudio 会重启 R，之后要重新运行 `library(rswallpaper)`，否则会报 `could not find function "wallpaper_studio"`。
+> 也可以不加载，直接用 `rswallpaper::wallpaper_studio()`，或者从 **Addins** 菜单打开 *Wallpaper Studio*。
 
 ## 快速开始
 

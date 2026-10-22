@@ -32,11 +32,26 @@ test_that("behind mode draws under the text and softens line markers", {
   expect_match(css, "mask-image: linear-gradient(to left", fixed = TRUE)
 })
 
-test_that("target = 'any' hides the image in the console and visual editor", {
-  f <- build_theme(demo_img(), theme = "sakura", target = "any", file = tempfile(fileext = ".rstheme"))
-  css <- paste(readLines(f), collapse = "\n")
-  expect_match(css, '[id*="console"] .ace_editor::after', fixed = TRUE)
-  expect_match(css, ".ProseMirror .ace_editor::after", fixed = TRUE)
+test_that("the image is kept out of the console, terminal and other panes", {
+  src <- '.ace_editor[id^="rstudio_source_text_editor"]'
+  cases <- list(
+    list(target = "source", mode = "overlay", sel = src, pseudo = "::after"),
+    list(target = "any", mode = "overlay", sel = ".ace_editor", pseudo = "::after"),
+    list(target = "source", mode = "behind", sel = src, pseudo = " .ace_scroller::before")
+  )
+  for (cs in cases) {
+    f <- build_theme(demo_img(), theme = "sakura", target = cs$target, mode = cs$mode,
+                     file = tempfile(fileext = ".rstheme"))
+    css <- readLines(f)
+    txt <- paste(css, collapse = "\n")
+    for (scope in c('[id^="rstudio_workbench_panel_"] ', ".terminal ", '[id*="console"] ', ".ProseMirror ")) {
+      expect_match(txt, paste0(scope, cs$sel, cs$pseudo), fixed = TRUE, info = paste(cs$target, cs$mode))
+    }
+    # :has() lives in a rule of its own so older browsers only drop that rule
+    has_line <- grep(":has(.terminal)", css, fixed = TRUE)
+    expect_length(has_line, 1)
+    expect_false(grepl("rstudio_workbench_panel_", css[has_line], fixed = TRUE))
+  }
 })
 
 test_that("rebuilding from a generated theme does not stack wallpapers", {
@@ -45,7 +60,7 @@ test_that("rebuilding from a generated theme does not stack wallpapers", {
   second <- build_theme(demo_img(), theme = first, file = tempfile(fileext = ".rstheme"))
   css <- readLines(second)
   expect_equal(sum(css == "/* rswallpaper:begin */"), 1)
-  expect_equal(sum(grepl("::after", css, fixed = TRUE)), 1)
+  expect_equal(sum(grepl("background-image: url(", css, fixed = TRUE)), 1)
   expect_equal(css[1], "/* rs-theme-name: Demo Light + Wallpaper */")
   expect_false(any(grepl("accent: IDE chrome", css, fixed = TRUE)))
 })
@@ -98,7 +113,7 @@ test_that("hand-made wallpapers in a base theme are removed", {
     "Removed the image"
   )
   built <- readLines(built)
-  expect_equal(sum(grepl("::after", built, fixed = TRUE)), 1)
+  expect_equal(sum(grepl("background-image: url(", built, fixed = TRUE)), 1)
   expect_false(any(grepl("base64,AAAA", built, fixed = TRUE)))
 })
 
