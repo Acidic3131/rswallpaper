@@ -13,7 +13,7 @@
 |---|---|
 | ![](man/figures/hero-light.png) | ![](man/figures/hero-dark.png) |
 
-> demo中用到的角色是 [小樽潮風高校Project](https://tokyo6.tokyo/) 的花隈千冬（© TOKYO6 ENTERTAINMENT），免费公开立绘，作为demo底图收录在 `inst/extdata/hanakuma_chifuyu.png`
+> demo中用到的角色是 [小樽潮風高校Project](https://tokyo6.tokyo/) 的花隈千冬（© TOKYO6 ENTERTAINMENT），该免费公开立绘作为demo底图收录在 `inst/extdata/hanakuma_chifuyu.png`
 
 ## 功能
 
