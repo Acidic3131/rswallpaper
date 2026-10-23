@@ -36,7 +36,6 @@ preview("hero-light.png", img, theme = "matcha", mode = "behind", opacity = 0.45
 # Low-saturation grey-green with a wisteria accent that echoes the skirt trim.
 sage_wisteria <- rs_palette("#B3AEDB", dark = TRUE, name = "Sage Wisteria", bg = "#1D2220", bg_hue = 150)
 preview("hero-dark.png", img, theme = sage_wisteria, mode = "behind", opacity = 0.55, size = 0.95)
-preview("accent-blue.png", img, theme = "Textmate (default)", accent = "#2F80D1", tint = 0.6, size = 0.95)
 
 # Overlay vs behind on a real Ace editor (loaded from cdnjs), image pushed over
 # the code so the layering is visible.
@@ -62,13 +61,6 @@ ace_page <- function(mode) {
 }
 magick::image_write(magick::image_append(c(ace_page("overlay"), ace_page("behind"))),
                     file.path(out, "modes.png"))
-
-# Small side-by-side of both palettes families
-png(file.path(out, "palettes.png"), width = 1400, height = 520, res = 110)
-op <- par(mfrow = c(2, 5), mar = c(0.4, 0.4, 2, 0.4))
-for (id in palettes()$name) plot(rswallpaper:::preset_palette(id))
-par(op)
-dev.off()
 
 for (f in list.files(out, pattern = "\\.png$", full.names = TRUE)) {
   magick::image_write(magick::image_read(f), f, format = "png", quality = 95)
